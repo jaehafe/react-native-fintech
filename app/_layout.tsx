@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
+import { UserInactivityProvider } from '@/context/UserInactivity';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -150,7 +151,7 @@ const InitialLayout = () => {
               <Ionicons name="arrow-back" size={34} color={Colors.dark} />
             </TouchableOpacity>
           ),
-          headerLargeTitle: true,
+          // headerLargeTitle: true,
           headerTransparent: true,
           headerRight: () => (
             <View style={{ flexDirection: 'row', gap: 10 }}>
@@ -187,10 +188,12 @@ const RootLayoutNav = () => {
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
       <QueryClientProvider client={queryClient}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <StatusBar style="light" />
-          <InitialLayout />
-        </GestureHandlerRootView>
+        <UserInactivityProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar style="light" />
+            <InitialLayout />
+          </GestureHandlerRootView>
+        </UserInactivityProvider>
       </QueryClientProvider>
     </ClerkProvider>
   );

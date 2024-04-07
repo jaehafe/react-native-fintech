@@ -15,7 +15,7 @@ import { format } from 'date-fns';
 import { defaultStyles } from '@/constants/Styles';
 import Colors from '@/constants/Colors';
 
-const categories = ['Overview', 'News', 'Orders', 'Transactions'];
+const categories = ['Overview', 'News', 'Orders', 'Transactions', '1222', '2222', ' 3333', '5555'];
 
 Animated.addWhitelistedNativeProps({ text: true });
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
@@ -73,32 +73,33 @@ export default function CryptoId() {
         // scrollEnabled={true}
         keyExtractor={(i) => i.title}
         sections={[{ data: [{ title: 'Chart' }] }]}
-        renderSectionHeader={() => (
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              alignItems: 'center',
-              width: '100%',
-              justifyContent: 'space-between',
-              paddingHorizontal: 16,
-              paddingBottom: 8,
-              backgroundColor: Colors.background,
-              borderBottomColor: Colors.lightGray,
-              borderBottomWidth: StyleSheet.hairlineWidth,
-            }}
-          >
-            {categories.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => setActiveIndex(index)}
-                style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
-              >
-                <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>{item}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        )}
+        renderSectionHeader={() => {
+          return (
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: 16,
+                paddingBottom: 8,
+                backgroundColor: Colors.background,
+                borderBottomColor: Colors.lightGray,
+                borderBottomWidth: StyleSheet.hairlineWidth,
+              }}
+            >
+              {categories.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => setActiveIndex(index)}
+                  style={activeIndex === index ? styles.categoriesBtnActive : styles.categoriesBtn}
+                >
+                  <Text style={activeIndex === index ? styles.categoryTextActive : styles.categoryText}>{item}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          );
+        }}
         ListHeaderComponent={() => (
           <>
             <View
@@ -135,71 +136,73 @@ export default function CryptoId() {
             </View>
           </>
         )}
-        renderItem={({ item }) => (
-          <>
-            <View style={[defaultStyles.block, { height: 500 }]}>
-              {tickers && (
-                <>
-                  {!isActive && (
-                    <View>
-                      <Text style={{ fontSize: 30, fontWeight: 'bold', color: Colors.dark }}>
-                        {tickers[tickers.length - 1].price.toFixed(2)} €
-                      </Text>
-                      <Text style={{ fontSize: 18, color: Colors.gray }}>Today</Text>
-                    </View>
-                  )}
-                  {isActive && (
-                    <View>
-                      <AnimatedTextInput
-                        editable={false}
-                        underlineColorAndroid={'transparent'}
-                        style={{ fontSize: 30, fontWeight: 'bold', color: Colors.dark }}
-                        animatedProps={animatedText}
-                      ></AnimatedTextInput>
-                      <AnimatedTextInput
-                        editable={false}
-                        underlineColorAndroid={'transparent'}
-                        style={{ fontSize: 18, color: Colors.gray }}
-                        animatedProps={animatedDateText}
-                      ></AnimatedTextInput>
-                    </View>
-                  )}
-                  <CartesianChart
-                    chartPressState={state}
-                    axisOptions={{
-                      font,
-                      tickCount: 5,
-                      labelOffset: { x: -2, y: 0 },
-                      labelColor: Colors.gray,
-                      formatYLabel: (v) => `${v} €`,
-                      formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
-                    }}
-                    data={tickers!}
-                    xKey="timestamp"
-                    yKeys={['price']}
-                  >
-                    {({ points }) => (
-                      <>
-                        <Line points={points.price} color={Colors.primary} strokeWidth={3} />
-                        {isActive && <ToolTip x={state.x.position} y={state.y.price.position} />}
-                      </>
+        renderItem={({ item }) => {
+          return (
+            <>
+              <View style={[defaultStyles.block, { height: 500 }]}>
+                {tickers && (
+                  <>
+                    {!isActive && (
+                      <View>
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: Colors.dark }}>
+                          {tickers[tickers.length - 1].price.toFixed(2)} €
+                        </Text>
+                        <Text style={{ fontSize: 18, color: Colors.gray }}>Today</Text>
+                      </View>
                     )}
-                  </CartesianChart>
-                </>
-              )}
-            </View>
-            <View style={[defaultStyles.block, { marginTop: 20 }]}>
-              <Text style={styles.subtitle}>Overview</Text>
-              <Text style={{ color: Colors.gray }}>
-                Bitcoin is a decentralized digital currency, without a central bank or single administrator, that can be
-                sent from user to user on the peer-to-peer bitcoin network without the need for intermediaries.
-                Transactions are verified by network nodes through cryptography and recorded in a public distributed
-                ledger called a blockchain.
-              </Text>
-            </View>
-          </>
-        )}
-      ></SectionList>
+                    {isActive && (
+                      <View>
+                        <AnimatedTextInput
+                          editable={false}
+                          underlineColorAndroid={'transparent'}
+                          style={{ fontSize: 30, fontWeight: 'bold', color: Colors.dark }}
+                          animatedProps={animatedText}
+                        ></AnimatedTextInput>
+                        <AnimatedTextInput
+                          editable={false}
+                          underlineColorAndroid={'transparent'}
+                          style={{ fontSize: 18, color: Colors.gray }}
+                          animatedProps={animatedDateText}
+                        ></AnimatedTextInput>
+                      </View>
+                    )}
+                    <CartesianChart
+                      chartPressState={state}
+                      axisOptions={{
+                        font,
+                        tickCount: 5,
+                        labelOffset: { x: -2, y: 0 },
+                        labelColor: Colors.gray,
+                        formatYLabel: (v) => `${v} €`,
+                        formatXLabel: (ms) => format(new Date(ms), 'MM/yy'),
+                      }}
+                      data={tickers!}
+                      xKey="timestamp"
+                      yKeys={['price']}
+                    >
+                      {({ points }) => (
+                        <>
+                          <Line points={points.price} color={Colors.primary} strokeWidth={3} />
+                          {isActive && <ToolTip x={state.x.position} y={state.y.price.position} />}
+                        </>
+                      )}
+                    </CartesianChart>
+                  </>
+                )}
+              </View>
+              <View style={[defaultStyles.block, { marginTop: 20 }]}>
+                <Text style={styles.subtitle}>Overview</Text>
+                <Text style={{ color: Colors.gray }}>
+                  Bitcoin is a decentralized digital currency, without a central bank or single administrator, that can
+                  be sent from user to user on the peer-to-peer bitcoin network without the need for intermediaries.
+                  Transactions are verified by network nodes through cryptography and recorded in a public distributed
+                  ledger called a blockchain.
+                </Text>
+              </View>
+            </>
+          );
+        }}
+      />
     </>
   );
 }

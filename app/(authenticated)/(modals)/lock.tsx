@@ -1,12 +1,5 @@
-import Colors from '@/constants/Colors';
-import { useUser } from '@clerk/clerk-expo';
 import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import * as Haptics from 'expo-haptics';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import * as LocalAuthentication from 'expo-local-authentication';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -14,6 +7,16 @@ import Animated, {
   withSequence,
   withTiming,
 } from 'react-native-reanimated';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import * as Haptics from 'expo-haptics';
+import { useRouter } from 'expo-router';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as LocalAuthentication from 'expo-local-authentication';
+
+import { useUser } from '@clerk/clerk-expo';
+
+import Colors from '@/constants/Colors';
 
 const Page = () => {
   const { user } = useUser();
