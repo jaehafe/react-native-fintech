@@ -15,7 +15,8 @@ const Dropdown = () => {
             ios={{
               name: 'list.bullet.rectangle.fill',
               pointSize: 24,
-            }}></DropdownMenu.ItemIcon>
+            }}
+          ></DropdownMenu.ItemIcon>
         </DropdownMenu.Item>
 
         <DropdownMenu.Item key="converter">
@@ -24,7 +25,8 @@ const Dropdown = () => {
             ios={{
               name: 'coloncurrencysign.arrow.circlepath',
               pointSize: 24,
-            }}></DropdownMenu.ItemIcon>
+            }}
+          ></DropdownMenu.ItemIcon>
         </DropdownMenu.Item>
 
         <DropdownMenu.Item key="background">
@@ -33,7 +35,8 @@ const Dropdown = () => {
             ios={{
               name: 'photo.fill',
               pointSize: 24,
-            }}></DropdownMenu.ItemIcon>
+            }}
+          ></DropdownMenu.ItemIcon>
         </DropdownMenu.Item>
 
         <DropdownMenu.Item key="account">
@@ -42,7 +45,8 @@ const Dropdown = () => {
             ios={{
               name: 'plus.rectangle.on.folder.fill',
               pointSize: 24,
-            }}></DropdownMenu.ItemIcon>
+            }}
+          ></DropdownMenu.ItemIcon>
         </DropdownMenu.Item>
       </DropdownMenu.Content>
     </DropdownMenu.Root>

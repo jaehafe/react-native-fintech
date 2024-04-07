@@ -10,7 +10,7 @@ export interface Transaction {
 }
 
 export interface BalanceState {
-  transactions: Array<Transaction>;
+  transactions: Transaction[];
   runTransaction: (transaction: Transaction) => void;
   balance: () => number;
   clearTransactions: () => void;
