@@ -10,6 +10,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import Colors from '@/constants/Colors';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
 import * as SecureStore from 'expo-secure-store';
@@ -20,6 +21,7 @@ export {
 } from 'expo-router';
 
 const CLERK_PUBLISHABLE_KEY = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+const queryClient = new QueryClient();
 
 const tokenCache = {
   async getToken(key: string) {
@@ -68,7 +70,7 @@ const InitialLayout = () => {
     const inAuthGroup = segments[0] === '(authenticated)';
 
     if (isSignedIn && !inAuthGroup) {
-      router.replace('/(authenticated)/(tabs)/home' as any);
+      router.replace('/(authenticated)/(tabs)/crypto' as any);
     } else if (!isSignedIn) {
       router.replace('/');
     }
@@ -138,9 +140,30 @@ const InitialLayout = () => {
           ),
         }}
       />
-
       <Stack.Screen name="(authenticated)/(tabs)" options={{ headerShown: false }} />
-
+      <Stack.Screen
+        name="(authenticated)/crypto/[id]"
+        options={{
+          title: '',
+          headerLeft: () => (
+            <TouchableOpacity onPress={router.back}>
+              <Ionicons name="arrow-back" size={34} color={Colors.dark} />
+            </TouchableOpacity>
+          ),
+          headerLargeTitle: true,
+          headerTransparent: true,
+          headerRight: () => (
+            <View style={{ flexDirection: 'row', gap: 10 }}>
+              <TouchableOpacity>
+                <Ionicons name="notifications-outline" color={Colors.dark} size={30} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Ionicons name="star-outline" color={Colors.dark} size={30} />
+              </TouchableOpacity>
+            </View>
+          ),
+        }}
+      />
       <Stack.Screen name="(authenticated)/(modals)/lock" options={{ headerShown: false, animation: 'none' }} />
       <Stack.Screen
         name="(authenticated)/(modals)/account"
@@ -163,10 +186,12 @@ const InitialLayout = () => {
 const RootLayoutNav = () => {
   return (
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY!} tokenCache={tokenCache}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar style="light" />
-        <InitialLayout />
-      </GestureHandlerRootView>
+      <QueryClientProvider client={queryClient}>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <StatusBar style="light" />
+          <InitialLayout />
+        </GestureHandlerRootView>
+      </QueryClientProvider>
     </ClerkProvider>
   );
 };
